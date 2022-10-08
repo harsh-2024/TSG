@@ -71,13 +71,13 @@ class _LoginPageState extends State<LoginPage> {
                   title: Text('Are you sure?'),
                   content: Text('Do you want to exit an App'),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text('No'),
                       onPressed: () {
                         Navigator.of(context).pop(false);
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text('Yes'),
                       onPressed: () {
                         Navigator.of(context).pop(true);
@@ -289,19 +289,23 @@ class _LoginPageState extends State<LoginPage> {
 
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(10, 4, 10, 10),
-                        child: FlatButton(
-                          minWidth: double.infinity,
-                          height: 48,
-                          color: Colors.red[700],
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)),
+                        child: TextButton(
+                          style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                  Size(double.infinity, 48)),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.red[700]),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15)))),
                           child: new Text(
                             isLoading == true ? "logging...." : 'Continue',
                             style: TextStyle(color: Color(0xFFFDFAFA)),
                           ),
                           onPressed: () async {
                             if (textController.text.trim() == "") {
-                              scaffoldKey.currentState.showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                   new SnackBar(
                                       content:
                                           new Text("please fill email id")));
@@ -309,7 +313,7 @@ class _LoginPageState extends State<LoginPage> {
                               return;
                             }
                             if (password.text.trim() == "") {
-                              scaffoldKey.currentState.showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                   new SnackBar(
                                       content:
                                           new Text("please fill password")));
@@ -336,7 +340,7 @@ class _LoginPageState extends State<LoginPage> {
                               //         builder: (context) => HomePage()));
                             } else {
                               _stopAnimation();
-                              scaffoldKey.currentState.showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                   new SnackBar(
                                       content: new Text(
                                           "invalid email or password")));
@@ -407,7 +411,7 @@ class _LoginPageState extends State<LoginPage> {
     print(data);
     try {
       final http.Response response = await http.post(
-          "https://signin-signup-user.herokuapp.com/login",
+          Uri.parse("https://signin-signup-user.herokuapp.com/login"),
           headers: {'Content-Type': "application/json"},
           body: data);
       var body = convert.json.decode(response.body);

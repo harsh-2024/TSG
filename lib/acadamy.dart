@@ -44,7 +44,7 @@ class _SearchAcadamyState extends State<SearchAcadamy> {
   getacad() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var cookie1 = prefs.getString("cookies");
-    var url = ('https://signin-signup-user.herokuapp.com/alldata');
+    var url = Uri.parse('https://signin-signup-user.herokuapp.com/alldata');
 
     // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url,
@@ -471,10 +471,19 @@ class _SearchAcadamyState extends State<SearchAcadamy> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
-                                                FlatButton(
+                                                ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      shape: MaterialStateProperty
+                                                          .all(CircleBorder(
+                                                              side: BorderSide
+                                                                  .none)),
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(Colors
+                                                                  .redAccent)),
                                                   // minWidth: 120,
                                                   // height: 40,
-                                                  color: Colors.redAccent[700],
+
                                                   onPressed: () async {
                                                     await launchUrl(
                                                         lauch: data[index]
@@ -488,8 +497,7 @@ class _SearchAcadamyState extends State<SearchAcadamy> {
                                                     //             YoutubePage()));
                                                   },
                                                   // shape:,
-                                                  shape: CircleBorder(
-                                                      side: BorderSide.none),
+
                                                   child:
                                                       // Icon(
                                                       //   Icons.phone,
@@ -584,7 +592,7 @@ class _SearchAcadamyState extends State<SearchAcadamy> {
         );
       }
     } catch (e) {
-      scaffoldKey.currentState
+      ScaffoldMessenger.of(context)
           .showSnackBar(new SnackBar(content: new Text(e.toString())));
     }
   }

@@ -30,7 +30,7 @@ class _LoginOtpState extends State<LoginOtp> {
         }''';
     try {
       final http.Response response = await http.post(
-        "https://signin-signup-user.herokuapp.com/user-verify",
+        Uri.parse("https://signin-signup-user.herokuapp.com/user-verify"),
         headers: {'Content-Type': "application/json"},
         body: data,
       );
@@ -53,7 +53,7 @@ class _LoginOtpState extends State<LoginOtp> {
   }
 
   Future<void> moveToNextScreen(context) async {
-    Scaffold.of(context)
+    ScaffoldMessenger.of(context)
         .showSnackBar(new SnackBar(content: new Text(onMessage)));
     await Future.delayed(Duration(milliseconds: 500));
     Navigator.pushAndRemoveUntil(

@@ -107,19 +107,21 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               SizedBox(height: 20),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 4, 10, 10),
-                child: FlatButton(
-                  minWidth: double.infinity,
-                  height: 48,
-                  color: Colors.red[700],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
+                child: TextButton(
+                  style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(Size(double.infinity, 48)),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.red[700]),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)))),
                   child: new Text(
                     isLoading == true ? "sending otp..." : 'Send Otp',
                     style: TextStyle(color: Color(0xFFFDFAFA)),
                   ),
                   onPressed: () async {
                     if (textController.text.trim() == "") {
-                      scaffoldKey.currentState.showSnackBar(new SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
                           content: new Text("please fill email id")));
 
                       return;
@@ -145,7 +147,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       //         builder: (context) => HomePage()));
                     } else {
                       _stopAnimation();
-                      scaffoldKey.currentState.showSnackBar(new SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
                           content: new Text(message.toLowerCase())));
                     }
                     _stopAnimation();
@@ -167,7 +169,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     print(data);
     try {
       final http.Response response = await http.post(
-          "https://signin-signup-user.herokuapp.com/forgetpassword",
+          Uri.parse("https://signin-signup-user.herokuapp.com/forgetpassword"),
           headers: {'Content-Type': "application/json"},
           body: data);
       var body = convert.json.decode(response.body);

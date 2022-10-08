@@ -850,17 +850,17 @@ class _SignUpState extends State<SignUp> {
                                 ? null
                                 : () async {
                                     if (nameController.text.trim() == "") {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
-                                              content: new Text(
-                                                  "please fill name")));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "please fill valid name")));
 
                                       return;
                                     }
 
                                     if (emailController.text.trim() == "") {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please fill email")));
 
@@ -870,22 +870,22 @@ class _SignUpState extends State<SignUp> {
                                             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                         .hasMatch(emailController.text.trim());
                                     if (!emailValid) {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please use valid email id")));
                                       return;
                                     }
                                     if (phoneController.text.trim() == "") {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please fill phone number")));
                                       return;
                                     }
                                     if (passwordController.text.trim() == "") {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please fill password")));
 
@@ -893,8 +893,8 @@ class _SignUpState extends State<SignUp> {
                                     }
 
                                     if (_value == null) {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please select a country")));
 
@@ -902,8 +902,8 @@ class _SignUpState extends State<SignUp> {
                                     }
 
                                     if (_states == null) {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please select a state")));
 
@@ -911,8 +911,8 @@ class _SignUpState extends State<SignUp> {
                                     }
 
                                     if (_cities == null) {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please select a city")));
 
@@ -920,24 +920,24 @@ class _SignUpState extends State<SignUp> {
                                     }
 
                                     if (_cities.name.trim() == "") {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please select a city")));
 
                                       return;
                                     }
                                     if (_states.name.trim() == "") {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please select a state")));
 
                                       return;
                                     }
                                     if (_value.name.trim() == "") {
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content: new Text(
                                                   "please select a country")));
 
@@ -948,8 +948,8 @@ class _SignUpState extends State<SignUp> {
 
                                     if (isLogin) {
                                       await _stopAnimation();
-                                      Scaffold.of(context).showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content:
                                                   new Text(onSignUpMessage)));
                                       await Future.delayed(
@@ -962,8 +962,8 @@ class _SignUpState extends State<SignUp> {
                                     } else {
                                       await _stopAnimation();
 
-                                      scaffoldKey.currentState.showSnackBar(
-                                          new SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(new SnackBar(
                                               content:
                                                   new Text(onSignUpMessage)));
                                     }
@@ -1027,7 +1027,7 @@ class _SignUpState extends State<SignUp> {
     print(data);
     try {
       final http.Response response = await http.post(
-          "https://signin-signup-user.herokuapp.com/signup",
+          Uri.parse("https://signin-signup-user.herokuapp.com/signup"),
           headers: {'Content-Type': "application/json"},
           body: data);
 
@@ -1105,7 +1105,7 @@ class _SignUpState extends State<SignUp> {
         }''';
     try {
       final http.Response response = await http.post(
-        "https://signin-signup-user.herokuapp.com/states",
+        Uri.parse("https://signin-signup-user.herokuapp.com/states"),
         headers: {'Content-Type': "application/json"},
         body: data,
       );
@@ -1145,7 +1145,7 @@ class _SignUpState extends State<SignUp> {
         }''';
     try {
       final http.Response response = await http.post(
-        "https://signin-signup-user.herokuapp.com/cities",
+        Uri.parse("https://signin-signup-user.herokuapp.com/cities"),
         headers: {'Content-Type': "application/json"},
         body: data,
       );

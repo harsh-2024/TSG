@@ -79,7 +79,7 @@ class _AllBlogsState extends State<AllBlogs> {
   getBlogs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var cookie1 = prefs.getString("cookies");
-    var url = ('https://signin-signup-user.herokuapp.com/sgtvdata');
+    var url = Uri.parse('https://signin-signup-user.herokuapp.com/sgtvdata');
 
     // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url,

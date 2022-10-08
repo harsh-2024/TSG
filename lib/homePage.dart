@@ -31,13 +31,13 @@ class _HomePageState extends State<HomePage> {
                   title: Text('Are you sure?'),
                   content: Text('Do you want to exit an App'),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text('No'),
                       onPressed: () {
                         Navigator.of(context).pop(false);
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text('Yes'),
                       onPressed: () {
                         print("object");
@@ -895,7 +895,7 @@ class _HomePageState extends State<HomePage> {
       //   throw 'Could not launch ${url}';
       // }
     } catch (e) {
-      scaffoldKey.currentState
+      ScaffoldMessenger.of(context)
           .showSnackBar(new SnackBar(content: new Text(e.toString())));
     }
   }

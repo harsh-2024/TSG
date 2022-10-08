@@ -9,6 +9,7 @@ import 'package:extended_image/extended_image.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as aa;
+import 'package:flutter/material.dart';
 
 // import 'package:fstore/models/user_model.dart';
 // import 'package:fstore/services/wordpress/wordpress.dart';
@@ -49,7 +50,7 @@ class _ScannerState extends State<Scanner> {
     print(data);
     try {
       final response = await http.post(
-          'https://signin-signup-user.herokuapp.com/bigqr',
+          Uri.parse('https://signin-signup-user.herokuapp.com/bigqr'),
           body: data,
           headers: {'Cookie': cookie, 'Content-Type': "application/json"});
       var body = convert.jsonDecode(response.body);
@@ -186,8 +187,9 @@ class _ScannerState extends State<Scanner> {
         //     )),
         // usually buttons at the bottom of the dialog
         Center(
-          child: FlatButton(
-            color: Colors.grey[200],
+          child: TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red)),
             child: Text(
               "ok",
               style: TextStyle(
@@ -249,7 +251,7 @@ class _ScannerState extends State<Scanner> {
       var cookie1 = prefs.getString("cookies");
       print(cookie);
       final response = await http.post(
-          'https://signin-signup-user.herokuapp.com/smallqr',
+          Uri.parse('https://signin-signup-user.herokuapp.com/smallqr'),
           body: data,
           headers: {'Cookie': cookie1, 'Content-Type': "application/json"});
       var body = convert.jsonDecode(response.body);
@@ -414,8 +416,11 @@ class _ScannerState extends State<Scanner> {
                         ),
                       if (val)
                         Center(
-                          child: FlatButton(
-                            color: Colors.redAccent[700],
+                          child: TextButton(
+                            // color: Colors.redAccent[700],
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Colors.redAccent)),
                             child: Text(
                               'Tap to validate the product',
                               style: t.TextStyle(
@@ -456,9 +461,10 @@ class _ScannerState extends State<Scanner> {
               // Show your Image
               Align(
                 alignment: Alignment.topRight,
-                child: RaisedButton.icon(
-                    color: Colors.redAccent[700],
-                    textColor: Colors.white,
+                child: TextButton.icon(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.redAccent)),
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(
                       Icons.close,
@@ -484,8 +490,8 @@ class _ScannerState extends State<Scanner> {
     //     preferredCameraDevice: CameraDevice.rear,
     //     maxHeight: 150,
     //     maxWidth: 150);
-
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    final ImagePicker _picker = ImagePicker();
+    var image = await _picker.pickImage(source: ImageSource.camera);
 
     if (image != null) {
       print(image.path);
@@ -645,9 +651,13 @@ class _ScannerState extends State<Scanner> {
                       ),
                       if (val)
                         Center(
-                          child: FlatButton(
-                            minWidth: double.infinity,
-                            color: Colors.redAccent[700],
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.red),
+                                minimumSize: MaterialStateProperty.all(
+                                  Size(double.infinity, 10),
+                                )),
                             child: Text(
                               'Click here to validate product',
                               style: t.TextStyle(
@@ -688,9 +698,11 @@ class _ScannerState extends State<Scanner> {
               // Show your Image
               Align(
                 alignment: Alignment.topRight,
-                child: RaisedButton.icon(
-                    color: Colors.redAccent[700],
-                    textColor: Colors.white,
+                child: TextButton.icon(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                        textStyle: MaterialStateProperty.all(
+                            TextStyle(color: Colors.white))),
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(
                       Icons.close,
@@ -776,9 +788,9 @@ class _ScannerState extends State<Scanner> {
               // Show your Image
               Align(
                 alignment: Alignment.topRight,
-                child: RaisedButton.icon(
-                    color: Colors.redAccent[700],
-                    textColor: Colors.white,
+                child: TextButton.icon(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red)),
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(
                       Icons.close,
@@ -798,7 +810,7 @@ class _ScannerState extends State<Scanner> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () async {
               await scan();
               if (barcode != "") {
@@ -809,7 +821,6 @@ class _ScannerState extends State<Scanner> {
                 onError(error);
               }
             },
-            padding: EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
                 Icon(
@@ -831,15 +842,16 @@ class _ScannerState extends State<Scanner> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          FlatButton(
-            height: 80,
-            minWidth: 200,
+          TextButton(
+            style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(Size(200, 80)),
+                padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                backgroundColor: MaterialStateProperty.all(Colors.red)),
             // minWidth: ,
             onPressed: () async {
               filePicker();
             },
-            color: Colors.red,
-            padding: EdgeInsets.all(10.0),
+
             child: Column(
               children: <Widget>[
                 Text(
@@ -875,9 +887,10 @@ class _ScannerState extends State<Scanner> {
                 // Show your Image
                 Align(
                   alignment: Alignment.topRight,
-                  child: RaisedButton.icon(
-                      color: Colors.redAccent[700],
-                      textColor: Colors.white,
+                  child: TextButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.redAccent)),
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(
                         Icons.close,
@@ -932,7 +945,7 @@ class _ScannerState extends State<Scanner> {
     //       actions: <Widget>[
     //         // usually buttons at the bottom of the dialog
     //         Center(
-    //           child: FlatButton(
+    //           child: TextButton(
     //             color: Colors.grey[200],
     //             child: Text(
     //               "ok",

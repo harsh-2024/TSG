@@ -53,7 +53,7 @@ class _FPOTPState extends State<FPOTP> {
   }
 
   Future<void> moveToNextScreen(context) async {
-    Scaffold.of(context)
+    ScaffoldMessenger.of(context)
         .showSnackBar(new SnackBar(content: new Text(onMessage)));
     await Future.delayed(Duration(milliseconds: 500));
     Navigator.pushAndRemoveUntil(

@@ -184,25 +184,27 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 4, 10, 10),
-                child: FlatButton(
-                  minWidth: double.infinity,
-                  height: 48,
-                  color: Colors.red[700],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
+                child: TextButton(
+                  style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(Size(double.infinity, 48)),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.red[700]),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)))),
                   child: new Text(
                     isLoading == true ? "processing..." : 'Reset Password',
                     style: TextStyle(color: Color(0xFFFDFAFA)),
                   ),
                   onPressed: () async {
                     if (password.text.trim() == "") {
-                      scaffoldKey.currentState.showSnackBar(new SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
                           content: new Text("please fill enter password")));
 
                       return;
                     }
                     if (confirmPAsswordController.text.trim() == "") {
-                      scaffoldKey.currentState.showSnackBar(new SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
                           content: new Text("please fill confirm password")));
 
                       return;
@@ -213,7 +215,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
                     if (!(password.text.trim() ==
                         confirmPAsswordController.text.trim())) {
-                      scaffoldKey.currentState.showSnackBar(new SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
                           content: new Text(
                               "Password and confirm password should match")));
 
@@ -240,7 +242,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       //         builder: (context) => HomePage()));
                     } else {
                       _stopAnimation();
-                      scaffoldKey.currentState.showSnackBar(new SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
                           content: new Text(message.toLowerCase())));
                     }
                     _stopAnimation();
@@ -264,7 +266,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     print(data);
     try {
       final http.Response response = await http.post(
-          "https://signin-signup-user.herokuapp.com/resetpassword",
+          Uri.parse("https://signin-signup-user.herokuapp.com/resetpassword"),
           headers: {'Content-Type': "application/json"},
           body: data);
       var body = convert.json.decode(response.body);
